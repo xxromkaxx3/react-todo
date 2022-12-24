@@ -40,14 +40,14 @@ const StyledOl = styled.ol`
 
 export const List: React.FC<Props> = ({item, butClick, liClick})=>{
     return <StyledOl>
-        {item.map(val =><div key = {val.id}>
-            <LiItem item={val} butClick={butClick} liClick={liClick}/>
-            {/* <StyledLi>
-            <Text selected = {val.completed} onClick={()=>liClick(val.id)}>{val.value}</Text>
-            <button onClick={()=>butClick(val.id)} >X</button>
-            </StyledLi>
-            <br></br> */}
-            </div>)}
+        {item.map(val =>
+            <LiItem key = {val.id} item={val} butClick={butClick} liClick={liClick}/>
+            // <StyledLi>
+            // <Text selected = {val.completed} onClick={()=>liClick(val.id)}>{val.value}</Text>
+            // <button onClick={()=>butClick(val.id)} >X</button>
+            // </StyledLi>
+            // <br></br> 
+            )}
     </StyledOl>
     
 }
