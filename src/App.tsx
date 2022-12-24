@@ -13,6 +13,7 @@ export type Todo = {
 function App() {
   const [value, setValue] = useState<string>('')
   const [list, setList] = useState<Todo[]>([])
+  const [completedList, setCompletedList] = useState<string[]>([])
 
   const onChangeHandler = (newValue:ChangeEvent<HTMLInputElement>) => {
     const newText = newValue.target.value
@@ -23,11 +24,11 @@ function App() {
   //     const element = document.getElementById(item.id)
   //     if (element) element.style.textDecoration='none'
   //   })
+  //   setTimeout(()=>{
   //   completedList.map(item=>{
   //     const element = document.getElementById(item)
   //     if (element) element.style.textDecoration='line-through'
-  //   }
-  //   )
+  //   })},0)
   // }
 
   const onClickHandler = () => {
@@ -46,16 +47,30 @@ function App() {
       element?.focus()
   }
   const onGrabHandler = (id:string)=>{
-    const targetTodoIndex = list.findIndex(todo => todo.id === id)
-    const targetTodo = list[targetTodoIndex]
-    const targetTodoWithNewState = {...targetTodo, completed: !targetTodo.completed}
-    const newArr = list.slice()
-    newArr[targetTodoIndex] = targetTodoWithNewState
-    setList(newArr)
+    // const element:HTMLElement|null= document.getElementById(id)
+    // if (!completed){
+    //   if (element) element.style.textDecoration='line-through'
+    //   setCompletedList([...completedList, id])
+    // } else if(completed){
+    //   if (element) element.style.textDecoration='none'
+    //   const copyCompletedList = completedList.slice()
+    //   const newCompletedList = copyCompletedList.filter(item => item!== id)
+    //   setCompletedList(newCompletedList)
+    // }
+    const targetIndex = list.findIndex(item => item.id === id)
+    const target = list[targetIndex]
+    const newStateTarget = {...target, completed: !target.completed }
+    const newList = list.slice()
+    newList[targetIndex] = newStateTarget
+    setList(newList)
+    
+    // copyList.forEach(item=>{if (item.id===id) item.completed=!completed})
+    // setList(copyList)
   }
   const onKeyDownHandler = (e:KeyboardEvent<HTMLInputElement>)=>{
     if (e.code === 'Enter') {
       onClickHandler() 
+      console.log(completedList)
       // setThroughLine()
     }
   }
@@ -63,6 +78,9 @@ function App() {
   const onRemoveHandler = (id:string) =>{
     const copyList = list.slice()
     const newList = copyList.filter(item=>item.id!==id)
+    const copyCompletedList = completedList.slice()
+    const newCompletedList = copyCompletedList.filter(item=>item!==id)
+    setCompletedList(newCompletedList)
     setList(newList)
     // setThroughLine()
   }
