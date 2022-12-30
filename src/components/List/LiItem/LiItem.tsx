@@ -29,8 +29,8 @@ export const LiItem: React.FC<Props> = ({item, butClick, liClick})=>{
     return  <div>  
         <StyledLi>
         <Text selected = {item.completed} onClick={()=>liClick(item.id)}>{item.value}</Text>
-        <button onClick={()=>butClick(item.id)} >X</button>
+        <button onClick={()=>butClick(item.id)} >X</button> 
         </StyledLi>
-        <br></br>
+        <br/>
         </div>
 }

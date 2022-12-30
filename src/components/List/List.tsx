@@ -9,9 +9,7 @@ export type Props = {
     butClick: (id:string) =>void
     liClick: (id:string) =>void
 }
-type TextProps = {
-    selected: boolean
-}
+
 // const StyledLi = styled.li `
 //     cursor: pointer;
 //     display: inline;

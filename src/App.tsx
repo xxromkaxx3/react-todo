@@ -1,5 +1,5 @@
 import {Input, Button, List} from './components'
-import {ChangeEvent, useState, KeyboardEvent} from 'react'
+import {ChangeEvent, useState, KeyboardEvent, useRef } from 'react'
 import {nanoid} from 'nanoid'
 import {StyledListWrapper, StyledWrapper} from './styles/StyledListWrapper'
 
@@ -13,7 +13,6 @@ export type Todo = {
 function App() {
   const [value, setValue] = useState<string>('')
   const [list, setList] = useState<Todo[]>([])
-  const [completedList, setCompletedList] = useState<string[]>([])
 
   const onChangeHandler = (newValue:ChangeEvent<HTMLInputElement>) => {
     const newText = newValue.target.value
@@ -30,6 +29,8 @@ function App() {
   //     if (element) element.style.textDecoration='line-through'
   //   })},0)
   // }
+  const inputRef = useRef<HTMLInputElement>(null)
+
 
   const onClickHandler = () => {
     
@@ -42,9 +43,10 @@ function App() {
       }
       setList([...list, newTodo])
       setValue('')
-      
-      const element:HTMLElement|null= document.getElementById("elementInput")
+
+      const element = inputRef.current
       element?.focus()
+
   }
   const onGrabHandler = (id:string)=>{
     // const element:HTMLElement|null= document.getElementById(id)
@@ -70,7 +72,6 @@ function App() {
   const onKeyDownHandler = (e:KeyboardEvent<HTMLInputElement>)=>{
     if (e.code === 'Enter') {
       onClickHandler() 
-      console.log(completedList)
       // setThroughLine()
     }
   }
@@ -78,19 +79,15 @@ function App() {
   const onRemoveHandler = (id:string) =>{
     const copyList = list.slice()
     const newList = copyList.filter(item=>item.id!==id)
-    const copyCompletedList = completedList.slice()
-    const newCompletedList = copyCompletedList.filter(item=>item!==id)
-    setCompletedList(newCompletedList)
     setList(newList)
     // setThroughLine()
   }
-
 
   return (
     <StyledWrapper>
       <StyledListWrapper>
         <List item={list}  liClick={onGrabHandler} butClick={onRemoveHandler} />
-        <Input id='elementInput' value={value} onKeyDown={onKeyDownHandler} onChange={onChangeHandler}/>
+        <Input ref={inputRef} id='elementInput' value={value} onKeyDown={onKeyDownHandler} onChange={onChangeHandler}/>
         <Button text='Save' onClick={onClickHandler} />
       </StyledListWrapper>
     </StyledWrapper>

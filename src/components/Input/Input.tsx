@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent } from "react";
+import React, { ChangeEvent, KeyboardEvent, useEffect } from "react";
 
 
 
@@ -9,7 +9,7 @@ type Props = {
     id: string
 }
 
-
-export const Input: React.FC<Props> = ({value, onChange, onKeyDown, id})=>{
-    return <input id={id} type='text' value={value} onKeyDown={onKeyDown} onChange={onChange}/>
-}
+export const Input =  React.forwardRef<HTMLInputElement, Props>((props, ref)=>{
+    const {value, onChange, onKeyDown, id} = props 
+    return <input ref = {ref} id={id} type='text' value={value} onKeyDown={onKeyDown} onChange={onChange}/>
+})
