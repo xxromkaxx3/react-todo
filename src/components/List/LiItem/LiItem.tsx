@@ -2,6 +2,8 @@ import React from 'react';
 import {Todo} from '../../../App';
 import styled from "styled-components";
 
+
+
 type Props = {
     item: Todo;
     butClick: (id:string) =>void

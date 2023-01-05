@@ -1,5 +1,5 @@
 import {Input, Button, List} from './components'
-import {ChangeEvent, useState, KeyboardEvent, useRef } from 'react'
+import {ChangeEvent, useState, KeyboardEvent, useRef, useEffect } from 'react'
 import {nanoid} from 'nanoid'
 import {StyledListWrapper, StyledWrapper} from './styles/StyledListWrapper'
 
@@ -82,6 +82,8 @@ function App() {
     setList(newList)
     // setThroughLine()
   }
+
+  useEffect(()=>inputRef.current?.focus(),[])
 
   return (
     <StyledWrapper>
