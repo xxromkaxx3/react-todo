@@ -2,7 +2,7 @@ import React from "react";
 import {Todo} from '../../App';
 import styled from "styled-components";
 import { LiItem } from "./LiItem";
-
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 
 export type Props = {
     item: Todo[]
@@ -10,6 +10,19 @@ export type Props = {
     liClick: (id:string) =>void
 }
 
+type ScrollType = {
+    scrollbars:{
+        visibility:string
+        autoHide:string
+    }
+}
+
+const scrollOptions:ScrollType = {
+    scrollbars: {
+        visibility: 'hidden',
+        autoHide: 'scroll'
+    }
+}
 // const StyledLi = styled.li `
 //     cursor: pointer;
 //     display: inline;
@@ -19,15 +32,14 @@ export type Props = {
 //     font-size: 20px;
 // `
 const StyledOl = styled.ol`
-    min-height: 85vh;
+    height: 85vh;
     margin: 0;
-    padding: 10px 0 10px 0;
+    padding: 10px 15px 10px 15px;
 `
 // const Text = styled.a<TextProps>`
 //     user-select: none;
 //     text-decoration: ${props => props.selected? 'line-through' : 'none'};
 // `
-
 
 
 // const onMouseDownHandler = (e:MouseEvent<HTMLAnchorElement>)=>{
@@ -37,15 +49,20 @@ const StyledOl = styled.ol`
 
 
 export const List: React.FC<Props> = ({item, butClick, liClick})=>{
-    return <StyledOl>
-        {item.map(val =>
-            <LiItem key = {val.id} item={val} butClick={butClick} liClick={liClick}/>
-            // <StyledLi>
-            // <Text selected = {val.completed} onClick={()=>liClick(val.id)}>{val.value}</Text>
-            // <button onClick={()=>butClick(val.id)} >X</button>
-            // </StyledLi>
-            // <br></br> 
-            )}
-    </StyledOl>
+
+
     
+    return <OverlayScrollbarsComponent defer 
+    options = {{scrollbars:{visibility:'auto', autoHide:'move'}}} >
+        <StyledOl>
+            {item.map(val =>
+                <LiItem key = {val.id} item={val} butClick={butClick} liClick={liClick}/>
+                // <StyledLi>
+                // <Text selected = {val.completed} onClick={()=>liClick(val.id)}>{val.value}</Text>
+                // <button onClick={()=>butClick(val.id)} >X</button>
+                // </StyledLi>
+                // <br></br> 
+                )}
+        </StyledOl>
+    </OverlayScrollbarsComponent>
 }

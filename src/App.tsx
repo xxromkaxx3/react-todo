@@ -3,6 +3,9 @@ import {ChangeEvent, useState, KeyboardEvent, useRef, useEffect } from 'react'
 import {nanoid} from 'nanoid'
 import {StyledListWrapper, StyledWrapper} from './styles/StyledListWrapper'
 
+
+
+
 export type Todo = {
   value: string
   completed: boolean
@@ -31,7 +34,6 @@ function App() {
   // }
   const inputRef = useRef<HTMLInputElement>(null)
 
-
   const onClickHandler = () => {
     
       if (!value) return
@@ -46,7 +48,6 @@ function App() {
 
       const element = inputRef.current
       element?.focus()
-
   }
   const onGrabHandler = (id:string)=>{
     // const element:HTMLElement|null= document.getElementById(id)
@@ -88,7 +89,7 @@ function App() {
   return (
     <StyledWrapper>
       <StyledListWrapper>
-        <List item={list}  liClick={onGrabHandler} butClick={onRemoveHandler} />
+        <List item={list} liClick={onGrabHandler} butClick={onRemoveHandler}/>
         <Input ref={inputRef} id='elementInput' value={value} onKeyDown={onKeyDownHandler} onChange={onChangeHandler}/>
         <Button text='Save' onClick={onClickHandler} />
       </StyledListWrapper>

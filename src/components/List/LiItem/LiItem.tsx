@@ -25,6 +25,7 @@ const StyledLi = styled.li `
 const Text = styled.a<TextProps>`
     user-select: none;
     text-decoration: ${props => props.selected? 'line-through' : 'none'};
+    word-break: break-word;
 `
 
 export const LiItem: React.FC<Props> = ({item, butClick, liClick})=>{
