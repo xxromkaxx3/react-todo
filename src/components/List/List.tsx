@@ -2,7 +2,8 @@ import React from "react";
 import {Todo} from '../../App';
 import styled from "styled-components";
 import { LiItem } from "./LiItem";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import { OverlayScrollbarsComponent} from "overlayscrollbars-react";
+import {ScrollbarsVisibilityBehavior, ScrollbarsAutoHideBehavior} from 'overlayscrollbars'
 
 export type Props = {
     item: Todo[]
@@ -12,14 +13,14 @@ export type Props = {
 
 type ScrollType = {
     scrollbars:{
-        visibility:string
-        autoHide:string
+        visibility:ScrollbarsVisibilityBehavior 
+        autoHide:ScrollbarsAutoHideBehavior 
     }
 }
 
 const scrollOptions:ScrollType = {
     scrollbars: {
-        visibility: 'hidden',
+        visibility: 'auto',
         autoHide: 'scroll'
     }
 }
@@ -34,7 +35,7 @@ const scrollOptions:ScrollType = {
 const StyledOl = styled.ol`
     height: 85vh;
     margin: 0;
-    padding: 10px 15px 10px 15px;
+    padding: 10px 20px 10px 15px;
 `
 // const Text = styled.a<TextProps>`
 //     user-select: none;
@@ -53,7 +54,7 @@ export const List: React.FC<Props> = ({item, butClick, liClick})=>{
 
     
     return <OverlayScrollbarsComponent defer 
-    options = {{scrollbars:{visibility:'auto', autoHide:'move'}}} >
+    options = {scrollOptions} >
         <StyledOl>
             {item.map(val =>
                 <LiItem key = {val.id} item={val} butClick={butClick} liClick={liClick}/>

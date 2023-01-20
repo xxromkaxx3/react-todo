@@ -45,9 +45,6 @@ function App() {
       }
       setList([...list, newTodo])
       setValue('')
-
-      const element = inputRef.current
-      element?.focus()
   }
   const onGrabHandler = (id:string)=>{
     // const element:HTMLElement|null= document.getElementById(id)
@@ -84,7 +81,7 @@ function App() {
     // setThroughLine()
   }
 
-  useEffect(()=>inputRef.current?.focus(),[])
+  useEffect(()=>inputRef.current?.focus(),[list])
 
   return (
     <StyledWrapper>
