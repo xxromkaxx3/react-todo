@@ -11,5 +11,5 @@ type Props = {
 
 export const Input =  React.forwardRef<HTMLInputElement, Props>((props, ref)=>{
     const {value, onChange, onKeyDown, id} = props 
-    return <input ref = {ref} id={id} type='text' value={value} onKeyDown={onKeyDown} onChange={onChange}/>
+    return <input style={{height:'35px'}} ref = {ref} id={id} type='text' value={value} onKeyDown={onKeyDown} onChange={onChange}/>
 })

@@ -37,6 +37,7 @@ const StyledOl = styled.ol`
     margin: 0;
     padding: 10px 20px 10px 15px;
 `
+
 // const Text = styled.a<TextProps>`
 //     user-select: none;
 //     text-decoration: ${props => props.selected? 'line-through' : 'none'};
