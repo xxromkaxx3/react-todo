@@ -12,10 +12,17 @@ export type Todo = {
   id:string
 }
 
+type Action = {
+  type:string,
+  value?:string,
+  id?:string
+}
 
 function App() {
   const [value, setValue] = useState<string>('')
   const [list, setList] = useState<Todo[]>([])
+
+
 
   const onChangeHandler = (newValue:ChangeEvent<HTMLInputElement>) => {
     const newText = newValue.target.value
@@ -81,7 +88,20 @@ function App() {
     // setThroughLine()
   }
 
-  useEffect(()=>inputRef.current?.focus(),[list])
+  useEffect(()=>{
+    const stringList = localStorage.getItem('list')
+    if (stringList) {
+      const list:Todo[] = JSON.parse(stringList)
+      setList(list)
+    }
+  }, [])
+
+  window.onunload = ()=>{
+    const stringList = JSON.stringify(list)
+    localStorage.setItem('list', stringList)
+}
+
+  useEffect(()=>{inputRef.current?.focus()},[list])
 
   return (
     <StyledWrapper>

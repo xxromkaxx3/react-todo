@@ -5,11 +5,13 @@ import { LiItem } from "./LiItem";
 import { OverlayScrollbarsComponent} from "overlayscrollbars-react";
 import {ScrollbarsVisibilityBehavior, ScrollbarsAutoHideBehavior} from 'overlayscrollbars'
 
+
 export type Props = {
     item: Todo[]
     butClick: (id:string) =>void
     liClick: (id:string) =>void
 }
+
 
 type ScrollType = {
     scrollbars:{
@@ -33,7 +35,7 @@ const scrollOptions:ScrollType = {
 //     font-size: 20px;
 // `
 const StyledOl = styled.ol`
-    height: 85vh;
+    height: 80vh;
     margin: 0;
     padding: 10px 20px 10px 15px;
 `

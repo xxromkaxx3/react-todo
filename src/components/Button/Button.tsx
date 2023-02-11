@@ -6,5 +6,5 @@ type Props = {
 }
 
 export const Button: React.FC<Props> = ({text, onClick})=>{
-    return <button style={{height:'35px'}} onClick={onClick}>{text}</button>
+    return <button style={{height:'4vh'}} onClick={onClick}>{text}</button>
 }
