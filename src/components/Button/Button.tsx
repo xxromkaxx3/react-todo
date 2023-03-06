@@ -1,10 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addLiAction } from "../../redux/actions";
 
 type Props = {
-    text: string
-    onClick:()=>void
 }
 
-export const Button: React.FC<Props> = ({text, onClick})=>{
-    return <button style={{height:'4vh'}} onClick={onClick}>{text}</button>
+
+export const Button: React.FC<Props> = ()=>{
+    
+    const dispatch = useDispatch()
+
+    return <button className="button" style={{height:'4vh'}} onClick={()=>dispatch(addLiAction())}>Save</button>
 }

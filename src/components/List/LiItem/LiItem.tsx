@@ -2,11 +2,11 @@ import React from 'react';
 import {Todo} from '../../../App';
 import styled from "styled-components";
 import cross from './cross.png'
+import { useDispatch } from 'react-redux';
+import { lineThroughAction, removeLiAction } from '../../../redux/actions';
 
 type Props = {
     item: Todo;
-    butClick: (id:string) =>void
-    liClick: (id:string) =>void
 }
 
 type TextProps = {
@@ -44,11 +44,13 @@ const Text = styled.a<TextProps>`
     cursor: pointer;
 `
 
-export const LiItem: React.FC<Props> = ({item, butClick, liClick})=>{
+
+export const LiItem: React.FC<Props> = ({item})=>{
+    const dispatch = useDispatch()
     return  <div>  
         <StyledLi>
-        <Text selected = {item.completed} onClick={()=>liClick(item.id)}>{item.value}</Text>
-        <StyledButton onClick={()=>butClick(item.id)} >
+        <Text selected = {item.completed} onClick={()=>dispatch(lineThroughAction(item.id))}>{item.value}</Text>
+        <StyledButton onClick={()=>dispatch(removeLiAction(item.id))} >
             <StyledImg src={cross} alt="" />
         </StyledButton> 
         </StyledLi>

@@ -1,15 +1,25 @@
-import React, { ChangeEvent, KeyboardEvent } from "react";
-
+import React, { KeyboardEvent, useEffect, useRef } from "react";
+import {useDispatch} from "react-redux" 
+import { addLiAction, inputTextAction } from "../../redux/actions";
+import { useTypedSelector } from "../../redux/typedUseSelector";
 
 
 type Props = {
-    value: string
-    onChange: (val:ChangeEvent<HTMLInputElement>)=>void
-    onKeyDown: (val:KeyboardEvent<HTMLInputElement>)=>void
-    id: string
 }
 
-export const Input =  React.forwardRef<HTMLInputElement, Props>((props, ref)=>{
-    const {value, onChange, onKeyDown, id} = props 
-    return <input style={{height:'4vh'}} ref = {ref} id={id} type='text' value={value} onKeyDown={onKeyDown} onChange={onChange}/>
+
+
+export const Input: React.FC<Props> = (()=>{
+    const dispatch = useDispatch()
+    const val = useTypedSelector(state => state.reducer.value)
+    const onKeyDownHandler = (e:KeyboardEvent<HTMLInputElement>) => {
+        if (e.code === 'Enter') {
+            dispatch(addLiAction())
+        }
+    }
+
+    const inputRef = useRef<HTMLInputElement>(null)
+    useEffect(()=>{inputRef.current?.focus()},[])
+
+    return <input style={{height:'4vh'}} ref = {inputRef}  type='text' value={val} onKeyDown={onKeyDownHandler} onChange={(e)=>dispatch(inputTextAction(e.target.value))}/>
 })
