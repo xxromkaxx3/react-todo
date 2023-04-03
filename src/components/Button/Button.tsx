@@ -1,14 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { addLiAction } from "../../redux/actions";
+import { useAppDispatch } from "../../redux/hooks";
+import { slice } from "../../redux/reduser";
 
 type Props = {
 }
 
 
 export const Button: React.FC<Props> = ()=>{
-    
-    const dispatch = useDispatch()
+    const {addLi} = slice.actions
+    const dispatch = useAppDispatch()
 
-    return <button className="button" style={{height:'4vh'}} onClick={()=>dispatch(addLiAction())}>Save</button>
+    return <button className="button" style={{height:'4vh'}} onClick={()=>dispatch(addLi())}>Сохранить</button>
 }

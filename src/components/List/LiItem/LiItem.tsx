@@ -1,9 +1,9 @@
 import React from 'react';
 import {Todo} from '../../../App';
 import styled from "styled-components";
-import cross from './cross.png'
-import { useDispatch } from 'react-redux';
-import { lineThroughAction, removeLiAction } from '../../../redux/actions';
+import cross from './cross.png';
+import { useAppDispatch } from '../../../redux/hooks';
+import { slice } from '../../../redux/reduser';
 
 type Props = {
     item: Todo;
@@ -24,6 +24,11 @@ const StyledImg = styled.img `
     cursor: pointer;
     height: 100%;
     width: 100%;
+    border-radius: 100%;
+    transition: 0.3s;
+    &:hover{
+        box-shadow: 0 0 10px  red;
+    }
 `
 const StyledButton = styled.button `
     height: 35px;
@@ -46,11 +51,12 @@ const Text = styled.a<TextProps>`
 
 
 export const LiItem: React.FC<Props> = ({item})=>{
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
+    const {lineThrough, removeLi} = slice.actions
     return  <div>  
         <StyledLi>
-        <Text selected = {item.completed} onClick={()=>dispatch(lineThroughAction(item.id))}>{item.value}</Text>
-        <StyledButton onClick={()=>dispatch(removeLiAction(item.id))} >
+        <Text selected = {item.completed} onClick={()=>dispatch(lineThrough(item.id))}>{item.value}</Text>
+        <StyledButton onClick={()=>dispatch(removeLi(item.id))} >
             <StyledImg src={cross} alt="" />
         </StyledButton> 
         </StyledLi>

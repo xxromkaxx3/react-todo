@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { LiItem } from "./LiItem";
 import { OverlayScrollbarsComponent} from "overlayscrollbars-react";
 import {ScrollbarsVisibilityBehavior, ScrollbarsAutoHideBehavior} from 'overlayscrollbars'
-import { useTypedSelector } from "../../redux/typedUseSelector";
+import { useTypedSelector } from "../../redux/hooks";
 
 
 export type Props = {

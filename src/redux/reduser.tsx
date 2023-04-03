@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid'
-import {TodoAction, TodoActionsTypes, TodoState} from './types'
+import {TodoState} from './types'
 import {Todo} from "../App"
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 const initialState:TodoState = {
@@ -8,76 +9,50 @@ const initialState:TodoState = {
     value: ''
 }
 
-
-
-function reducer (state:TodoState = initialState, action:TodoAction):TodoState{
-    const {list, value} = state
-    const copyList = list.slice()
-    switch (action.type){
-        case TodoActionsTypes.INPUT_TEXT:
-        {
-            return{
-                ...state,
-                value: action.payload
-            }
-        }
-        case TodoActionsTypes.ADD_LI:
-        {
-            if (!value) return state
+export const slice = createSlice({
+    name: 'todo',
+    initialState,
+    reducers: {
+        inputText(state, action:PayloadAction<string>){
+            state.value = action.payload
+            localStorage.setItem('value', action.payload)
+        },
+        addLi(state){
+            if (!state.value) return
             const id = nanoid()
-            const newTodo = {
-                value: value,
+            const newTodo:Todo = {
+                value: state.value,
                 completed: false,
                 id: id
             }
-            const newList = [...list, newTodo]
-            const stringList = JSON.stringify(newList)
-            localStorage.setItem('list', stringList)
-            return {
-                ...state,
-                list: newList,
-                value: ''
-            }
-        }
-        case TodoActionsTypes.REMOVE_LI:
-        {
-            const newList = copyList.filter(item=>item.id!==action.payload)
-            const stringList = JSON.stringify(newList)
-            localStorage.setItem('list', stringList)
-            return {
-                ...state,
-                list: newList
-            }
-        }
-        case TodoActionsTypes.LINE_THROUGH:
-        {
-            const targetIndex = list.findIndex(item => item.id === action.payload)
-            const target = list[targetIndex]
-            const newTargetState = {...target, completed: !target.completed}
-            copyList[targetIndex] = newTargetState
-            const stringList = JSON.stringify(copyList)
-            localStorage.setItem('list', stringList)
-            return {
-                ...state,
-                list: copyList
-            }
-        } 
-        case TodoActionsTypes.GET_STORAGE_LIST:
-        {
+            state.list.push(newTodo)
+            const stringState = JSON.stringify(state.list)
+            localStorage.setItem('list', stringState)
+            state.value = ''
+            localStorage.setItem('value', '')
+        },
+        removeLi(state, action:PayloadAction<string>){
+            state.list = state.list.filter(item => item.id !== action.payload)
+            const stringState = JSON.stringify(state.list)
+            localStorage.setItem('list', stringState)
+        },
+        lineThrough(state, action:PayloadAction<string>){
+            state.list.forEach(item => {if (item.id === action.payload) item.completed = !item.completed})
+            const stringState = JSON.stringify(state.list)
+            localStorage.setItem('list', stringState)
+        },
+        getStorage(state){
             const stringList = localStorage.getItem('list')
-            if (!stringList) return state
-            const list:Todo[] = JSON.parse(stringList)
-            return {
-                ...state,
-                list: list
-            }
+            const value = localStorage.getItem('value')
+            if (!stringList) return 
+            const list = JSON.parse(stringList)
+            state.list = list
+            if (!value) return
+            state.value = value
         }
-        default: 
-            return state
     }
-}
+})
 
 
-
-export default reducer
+export default slice.reducer
 

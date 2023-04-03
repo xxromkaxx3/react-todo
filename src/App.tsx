@@ -2,7 +2,7 @@ import {Input, Button, List} from './components'
 import {useEffect } from 'react'
 import {StyledListWrapper, StyledWrapper} from './styles/StyledListWrapper'
 import { useDispatch } from 'react-redux'
-import { getStorageListAction } from './redux/actions'
+import { slice } from './redux/reduser'
 
 
 
@@ -15,9 +15,9 @@ export type Todo = {
 
 
 function App() {
-
+  const {getStorage} = slice.actions
   const dispatch = useDispatch()
-  useEffect(()=>{dispatch(getStorageListAction())}, [dispatch])
+  useEffect(()=>{dispatch(getStorage())}, [dispatch, getStorage])
 
   return (
     <StyledWrapper>
